@@ -1,0 +1,813 @@
+{
+ "Resources": {
+  "OrdersTable315BB997": {
+   "Type": "AWS::DynamoDB::Table",
+   "Properties": {
+    "AttributeDefinitions": [
+     {
+      "AttributeName": "orderId",
+      "AttributeType": "S"
+     }
+    ],
+    "KeySchema": [
+     {
+      "AttributeName": "orderId",
+      "KeyType": "HASH"
+     }
+    ],
+    "ProvisionedThroughput": {
+     "ReadCapacityUnits": 5,
+     "WriteCapacityUnits": 5
+    },
+    "TableName": "Orders"
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "OrdersApiStack/OrdersTable/Resource"
+   }
+  },
+  "CreateOrderFunctionServiceRole1DACE62C": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersApiStack/CreateOrderFunction/ServiceRole/Resource"
+   }
+  },
+  "CreateOrderFunctionServiceRoleDefaultPolicy26A206EE": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "dynamodb:BatchGetItem",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:ConditionCheckItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:DescribeTable",
+        "dynamodb:GetItem",
+        "dynamodb:GetRecords",
+        "dynamodb:GetShardIterator",
+        "dynamodb:PutItem",
+        "dynamodb:Query",
+        "dynamodb:Scan",
+        "dynamodb:UpdateItem"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "OrdersTable315BB997",
+          "Arn"
+         ]
+        },
+        {
+         "Ref": "AWS::NoValue"
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "CreateOrderFunctionServiceRoleDefaultPolicy26A206EE",
+    "Roles": [
+     {
+      "Ref": "CreateOrderFunctionServiceRole1DACE62C"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersApiStack/CreateOrderFunction/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "CreateOrderFunction7F1C188E": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-616048412683-us-east-2",
+     "S3Key": "b1f95d160ec9a7d68d9ef20ad6d76d04733efc0c8efd0f2b12e4fb4479a95cbe.zip"
+    },
+    "Handler": "create_order.lambda_handler",
+    "Role": {
+     "Fn::GetAtt": [
+      "CreateOrderFunctionServiceRole1DACE62C",
+      "Arn"
+     ]
+    },
+    "Runtime": "python3.12"
+   },
+   "DependsOn": [
+    "CreateOrderFunctionServiceRoleDefaultPolicy26A206EE",
+    "CreateOrderFunctionServiceRole1DACE62C"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "OrdersApiStack/CreateOrderFunction/Resource",
+    "aws:asset:path": "asset.b1f95d160ec9a7d68d9ef20ad6d76d04733efc0c8efd0f2b12e4fb4479a95cbe",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Code"
+   }
+  },
+  "ReadOrderFunctionServiceRole21F38209": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersApiStack/ReadOrderFunction/ServiceRole/Resource"
+   }
+  },
+  "ReadOrderFunctionServiceRoleDefaultPolicy546C4DAA": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "dynamodb:BatchGetItem",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:ConditionCheckItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:DescribeTable",
+        "dynamodb:GetItem",
+        "dynamodb:GetRecords",
+        "dynamodb:GetShardIterator",
+        "dynamodb:PutItem",
+        "dynamodb:Query",
+        "dynamodb:Scan",
+        "dynamodb:UpdateItem"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "OrdersTable315BB997",
+          "Arn"
+         ]
+        },
+        {
+         "Ref": "AWS::NoValue"
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "ReadOrderFunctionServiceRoleDefaultPolicy546C4DAA",
+    "Roles": [
+     {
+      "Ref": "ReadOrderFunctionServiceRole21F38209"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersApiStack/ReadOrderFunction/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "ReadOrderFunctionB55CD498": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-616048412683-us-east-2",
+     "S3Key": "b1f95d160ec9a7d68d9ef20ad6d76d04733efc0c8efd0f2b12e4fb4479a95cbe.zip"
+    },
+    "Handler": "read_order.lambda_handler",
+    "Role": {
+     "Fn::GetAtt": [
+      "ReadOrderFunctionServiceRole21F38209",
+      "Arn"
+     ]
+    },
+    "Runtime": "python3.12"
+   },
+   "DependsOn": [
+    "ReadOrderFunctionServiceRoleDefaultPolicy546C4DAA",
+    "ReadOrderFunctionServiceRole21F38209"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "OrdersApiStack/ReadOrderFunction/Resource",
+    "aws:asset:path": "asset.b1f95d160ec9a7d68d9ef20ad6d76d04733efc0c8efd0f2b12e4fb4479a95cbe",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Code"
+   }
+  },
+  "UpdateOrderFunctionServiceRole2D31B092": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersApiStack/UpdateOrderFunction/ServiceRole/Resource"
+   }
+  },
+  "UpdateOrderFunctionServiceRoleDefaultPolicy4F13CF5E": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "dynamodb:BatchGetItem",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:ConditionCheckItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:DescribeTable",
+        "dynamodb:GetItem",
+        "dynamodb:GetRecords",
+        "dynamodb:GetShardIterator",
+        "dynamodb:PutItem",
+        "dynamodb:Query",
+        "dynamodb:Scan",
+        "dynamodb:UpdateItem"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "OrdersTable315BB997",
+          "Arn"
+         ]
+        },
+        {
+         "Ref": "AWS::NoValue"
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "UpdateOrderFunctionServiceRoleDefaultPolicy4F13CF5E",
+    "Roles": [
+     {
+      "Ref": "UpdateOrderFunctionServiceRole2D31B092"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersApiStack/UpdateOrderFunction/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "UpdateOrderFunction3F133C5A": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-616048412683-us-east-2",
+     "S3Key": "b1f95d160ec9a7d68d9ef20ad6d76d04733efc0c8efd0f2b12e4fb4479a95cbe.zip"
+    },
+    "Handler": "update_order.lambda_handler",
+    "Role": {
+     "Fn::GetAtt": [
+      "UpdateOrderFunctionServiceRole2D31B092",
+      "Arn"
+     ]
+    },
+    "Runtime": "python3.12"
+   },
+   "DependsOn": [
+    "UpdateOrderFunctionServiceRoleDefaultPolicy4F13CF5E",
+    "UpdateOrderFunctionServiceRole2D31B092"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "OrdersApiStack/UpdateOrderFunction/Resource",
+    "aws:asset:path": "asset.b1f95d160ec9a7d68d9ef20ad6d76d04733efc0c8efd0f2b12e4fb4479a95cbe",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Code"
+   }
+  },
+  "DeleteOrderFunctionServiceRoleC429E756": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersApiStack/DeleteOrderFunction/ServiceRole/Resource"
+   }
+  },
+  "DeleteOrderFunctionServiceRoleDefaultPolicy2B607DCD": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "dynamodb:BatchGetItem",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:ConditionCheckItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:DescribeTable",
+        "dynamodb:GetItem",
+        "dynamodb:GetRecords",
+        "dynamodb:GetShardIterator",
+        "dynamodb:PutItem",
+        "dynamodb:Query",
+        "dynamodb:Scan",
+        "dynamodb:UpdateItem"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "OrdersTable315BB997",
+          "Arn"
+         ]
+        },
+        {
+         "Ref": "AWS::NoValue"
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "DeleteOrderFunctionServiceRoleDefaultPolicy2B607DCD",
+    "Roles": [
+     {
+      "Ref": "DeleteOrderFunctionServiceRoleC429E756"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersApiStack/DeleteOrderFunction/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "DeleteOrderFunction4A8CB527": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-616048412683-us-east-2",
+     "S3Key": "b1f95d160ec9a7d68d9ef20ad6d76d04733efc0c8efd0f2b12e4fb4479a95cbe.zip"
+    },
+    "Handler": "delete_order.lambda_handler",
+    "Role": {
+     "Fn::GetAtt": [
+      "DeleteOrderFunctionServiceRoleC429E756",
+      "Arn"
+     ]
+    },
+    "Runtime": "python3.12"
+   },
+   "DependsOn": [
+    "DeleteOrderFunctionServiceRoleDefaultPolicy2B607DCD",
+    "DeleteOrderFunctionServiceRoleC429E756"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "OrdersApiStack/DeleteOrderFunction/Resource",
+    "aws:asset:path": "asset.b1f95d160ec9a7d68d9ef20ad6d76d04733efc0c8efd0f2b12e4fb4479a95cbe",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Code"
+   }
+  },
+  "OrdersApi48294D44": {
+   "Type": "AWS::ApiGatewayV2::Api",
+   "Properties": {
+    "Name": "OrdersApi",
+    "ProtocolType": "HTTP"
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersApiStack/OrdersApi/Resource"
+   }
+  },
+  "OrdersApiDefaultStage93090197": {
+   "Type": "AWS::ApiGatewayV2::Stage",
+   "Properties": {
+    "ApiId": {
+     "Ref": "OrdersApi48294D44"
+    },
+    "AutoDeploy": true,
+    "StageName": "$default"
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersApiStack/OrdersApi/DefaultStage/Resource"
+   }
+  },
+  "OrdersApiPOSTordersCreateOrderIntegration781213C5": {
+   "Type": "AWS::ApiGatewayV2::Integration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "OrdersApi48294D44"
+    },
+    "IntegrationType": "AWS_PROXY",
+    "IntegrationUri": {
+     "Fn::GetAtt": [
+      "CreateOrderFunction7F1C188E",
+      "Arn"
+     ]
+    },
+    "PayloadFormatVersion": "2.0"
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersApiStack/OrdersApi/POST--orders/CreateOrderIntegration/Resource"
+   }
+  },
+  "OrdersApiPOSTordersCreateOrderIntegrationPermission09400173": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "CreateOrderFunction7F1C188E",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:aws:execute-api:us-east-2:616048412683:",
+       {
+        "Ref": "OrdersApi48294D44"
+       },
+       "/*/*/orders"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersApiStack/OrdersApi/POST--orders/CreateOrderIntegration-Permission"
+   }
+  },
+  "OrdersApiPOSTordersC7A258EF": {
+   "Type": "AWS::ApiGatewayV2::Route",
+   "Properties": {
+    "ApiId": {
+     "Ref": "OrdersApi48294D44"
+    },
+    "AuthorizationType": "NONE",
+    "RouteKey": "POST /orders",
+    "Target": {
+     "Fn::Join": [
+      "",
+      [
+       "integrations/",
+       {
+        "Ref": "OrdersApiPOSTordersCreateOrderIntegration781213C5"
+       }
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersApiStack/OrdersApi/POST--orders/Resource"
+   }
+  },
+  "OrdersApiGETordersorderIdReadOrderIntegration9340391C": {
+   "Type": "AWS::ApiGatewayV2::Integration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "OrdersApi48294D44"
+    },
+    "IntegrationType": "AWS_PROXY",
+    "IntegrationUri": {
+     "Fn::GetAtt": [
+      "ReadOrderFunctionB55CD498",
+      "Arn"
+     ]
+    },
+    "PayloadFormatVersion": "2.0"
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersApiStack/OrdersApi/GET--orders--{orderId}/ReadOrderIntegration/Resource"
+   }
+  },
+  "OrdersApiGETordersorderIdReadOrderIntegrationPermission308B1F2A": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "ReadOrderFunctionB55CD498",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:aws:execute-api:us-east-2:616048412683:",
+       {
+        "Ref": "OrdersApi48294D44"
+       },
+       "/*/*/orders/{orderId}"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersApiStack/OrdersApi/GET--orders--{orderId}/ReadOrderIntegration-Permission"
+   }
+  },
+  "OrdersApiGETordersorderId45A569CB": {
+   "Type": "AWS::ApiGatewayV2::Route",
+   "Properties": {
+    "ApiId": {
+     "Ref": "OrdersApi48294D44"
+    },
+    "AuthorizationType": "NONE",
+    "RouteKey": "GET /orders/{orderId}",
+    "Target": {
+     "Fn::Join": [
+      "",
+      [
+       "integrations/",
+       {
+        "Ref": "OrdersApiGETordersorderIdReadOrderIntegration9340391C"
+       }
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersApiStack/OrdersApi/GET--orders--{orderId}/Resource"
+   }
+  },
+  "OrdersApiPUTordersorderIdUpdateOrderIntegrationC846371E": {
+   "Type": "AWS::ApiGatewayV2::Integration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "OrdersApi48294D44"
+    },
+    "IntegrationType": "AWS_PROXY",
+    "IntegrationUri": {
+     "Fn::GetAtt": [
+      "UpdateOrderFunction3F133C5A",
+      "Arn"
+     ]
+    },
+    "PayloadFormatVersion": "2.0"
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersApiStack/OrdersApi/PUT--orders--{orderId}/UpdateOrderIntegration/Resource"
+   }
+  },
+  "OrdersApiPUTordersorderIdUpdateOrderIntegrationPermission98B18F16": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "UpdateOrderFunction3F133C5A",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:aws:execute-api:us-east-2:616048412683:",
+       {
+        "Ref": "OrdersApi48294D44"
+       },
+       "/*/*/orders/{orderId}"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersApiStack/OrdersApi/PUT--orders--{orderId}/UpdateOrderIntegration-Permission"
+   }
+  },
+  "OrdersApiPUTordersorderIdDD93DB34": {
+   "Type": "AWS::ApiGatewayV2::Route",
+   "Properties": {
+    "ApiId": {
+     "Ref": "OrdersApi48294D44"
+    },
+    "AuthorizationType": "NONE",
+    "RouteKey": "PUT /orders/{orderId}",
+    "Target": {
+     "Fn::Join": [
+      "",
+      [
+       "integrations/",
+       {
+        "Ref": "OrdersApiPUTordersorderIdUpdateOrderIntegrationC846371E"
+       }
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersApiStack/OrdersApi/PUT--orders--{orderId}/Resource"
+   }
+  },
+  "OrdersApiDELETEordersorderIdDeleteOrderIntegration63DCBFB8": {
+   "Type": "AWS::ApiGatewayV2::Integration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "OrdersApi48294D44"
+    },
+    "IntegrationType": "AWS_PROXY",
+    "IntegrationUri": {
+     "Fn::GetAtt": [
+      "DeleteOrderFunction4A8CB527",
+      "Arn"
+     ]
+    },
+    "PayloadFormatVersion": "2.0"
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersApiStack/OrdersApi/DELETE--orders--{orderId}/DeleteOrderIntegration/Resource"
+   }
+  },
+  "OrdersApiDELETEordersorderIdDeleteOrderIntegrationPermission5929C388": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "DeleteOrderFunction4A8CB527",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:aws:execute-api:us-east-2:616048412683:",
+       {
+        "Ref": "OrdersApi48294D44"
+       },
+       "/*/*/orders/{orderId}"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersApiStack/OrdersApi/DELETE--orders--{orderId}/DeleteOrderIntegration-Permission"
+   }
+  },
+  "OrdersApiDELETEordersorderIdBA3F6B1A": {
+   "Type": "AWS::ApiGatewayV2::Route",
+   "Properties": {
+    "ApiId": {
+     "Ref": "OrdersApi48294D44"
+    },
+    "AuthorizationType": "NONE",
+    "RouteKey": "DELETE /orders/{orderId}",
+    "Target": {
+     "Fn::Join": [
+      "",
+      [
+       "integrations/",
+       {
+        "Ref": "OrdersApiDELETEordersorderIdDeleteOrderIntegration63DCBFB8"
+       }
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersApiStack/OrdersApi/DELETE--orders--{orderId}/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/12QQW6EMAxFz9J98AjoBWYqVe0OMbMfmZBSF0gQdopQlLuPElqp6uo/299flisonyson3DjQvdjMVEH4SqoR4Ub30O/W5xd30G4YTcZ9fJhM0Q14dz1COHVWy3kbBr95casMzGTs1ERzhBad+xnbdxEes++TFFxfUdmIwznJIpruHg9GrkgG4ULDShmw/27gvAmspwXSutJUnkVHHL8AanVOi8HvVsxw4q/p/0rsy9G1Rp2ftVG5QNSDtkhG34GUTW7fDp7qqFMT/tiomL1Vmg20B76ANUaFM5RAQAA"
+   },
+   "Metadata": {
+    "aws:cdk:path": "OrdersApiStack/CDKMetadata/Default"
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

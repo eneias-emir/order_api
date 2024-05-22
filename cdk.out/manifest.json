@@ -1,0 +1,235 @@
+{
+  "version": "36.0.0",
+  "artifacts": {
+    "OrdersApiStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "OrdersApiStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "OrdersApiStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://616048412683/us-east-2",
+      "properties": {
+        "templateFile": "OrdersApiStack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::616048412683:role/cdk-hnb659fds-deploy-role-616048412683-us-east-2",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::616048412683:role/cdk-hnb659fds-cfn-exec-role-616048412683-us-east-2",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-616048412683-us-east-2/a2a14fc7209dbb994a4cf4a42342570c333ea6f2103b5b76c620da3e1aae3e61.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "OrdersApiStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::616048412683:role/cdk-hnb659fds-lookup-role-616048412683-us-east-2",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "OrdersApiStack.assets"
+      ],
+      "metadata": {
+        "/OrdersApiStack/OrdersTable": [
+          {
+            "type": "aws:cdk:hasPhysicalName",
+            "data": {
+              "Ref": "OrdersTable315BB997"
+            }
+          }
+        ],
+        "/OrdersApiStack/OrdersTable/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "OrdersTable315BB997"
+          }
+        ],
+        "/OrdersApiStack/CreateOrderFunction/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CreateOrderFunctionServiceRole1DACE62C"
+          }
+        ],
+        "/OrdersApiStack/CreateOrderFunction/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CreateOrderFunctionServiceRoleDefaultPolicy26A206EE"
+          }
+        ],
+        "/OrdersApiStack/CreateOrderFunction/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CreateOrderFunction7F1C188E"
+          }
+        ],
+        "/OrdersApiStack/ReadOrderFunction/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReadOrderFunctionServiceRole21F38209"
+          }
+        ],
+        "/OrdersApiStack/ReadOrderFunction/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReadOrderFunctionServiceRoleDefaultPolicy546C4DAA"
+          }
+        ],
+        "/OrdersApiStack/ReadOrderFunction/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReadOrderFunctionB55CD498"
+          }
+        ],
+        "/OrdersApiStack/UpdateOrderFunction/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UpdateOrderFunctionServiceRole2D31B092"
+          }
+        ],
+        "/OrdersApiStack/UpdateOrderFunction/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UpdateOrderFunctionServiceRoleDefaultPolicy4F13CF5E"
+          }
+        ],
+        "/OrdersApiStack/UpdateOrderFunction/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UpdateOrderFunction3F133C5A"
+          }
+        ],
+        "/OrdersApiStack/DeleteOrderFunction/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DeleteOrderFunctionServiceRoleC429E756"
+          }
+        ],
+        "/OrdersApiStack/DeleteOrderFunction/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DeleteOrderFunctionServiceRoleDefaultPolicy2B607DCD"
+          }
+        ],
+        "/OrdersApiStack/DeleteOrderFunction/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DeleteOrderFunction4A8CB527"
+          }
+        ],
+        "/OrdersApiStack/OrdersApi/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "OrdersApi48294D44"
+          }
+        ],
+        "/OrdersApiStack/OrdersApi/DefaultStage/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "OrdersApiDefaultStage93090197"
+          }
+        ],
+        "/OrdersApiStack/OrdersApi/POST--orders/CreateOrderIntegration/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "OrdersApiPOSTordersCreateOrderIntegration781213C5"
+          }
+        ],
+        "/OrdersApiStack/OrdersApi/POST--orders/CreateOrderIntegration-Permission": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "OrdersApiPOSTordersCreateOrderIntegrationPermission09400173"
+          }
+        ],
+        "/OrdersApiStack/OrdersApi/POST--orders/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "OrdersApiPOSTordersC7A258EF"
+          }
+        ],
+        "/OrdersApiStack/OrdersApi/GET--orders--{orderId}/ReadOrderIntegration/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "OrdersApiGETordersorderIdReadOrderIntegration9340391C"
+          }
+        ],
+        "/OrdersApiStack/OrdersApi/GET--orders--{orderId}/ReadOrderIntegration-Permission": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "OrdersApiGETordersorderIdReadOrderIntegrationPermission308B1F2A"
+          }
+        ],
+        "/OrdersApiStack/OrdersApi/GET--orders--{orderId}/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "OrdersApiGETordersorderId45A569CB"
+          }
+        ],
+        "/OrdersApiStack/OrdersApi/PUT--orders--{orderId}/UpdateOrderIntegration/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "OrdersApiPUTordersorderIdUpdateOrderIntegrationC846371E"
+          }
+        ],
+        "/OrdersApiStack/OrdersApi/PUT--orders--{orderId}/UpdateOrderIntegration-Permission": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "OrdersApiPUTordersorderIdUpdateOrderIntegrationPermission98B18F16"
+          }
+        ],
+        "/OrdersApiStack/OrdersApi/PUT--orders--{orderId}/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "OrdersApiPUTordersorderIdDD93DB34"
+          }
+        ],
+        "/OrdersApiStack/OrdersApi/DELETE--orders--{orderId}/DeleteOrderIntegration/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "OrdersApiDELETEordersorderIdDeleteOrderIntegration63DCBFB8"
+          }
+        ],
+        "/OrdersApiStack/OrdersApi/DELETE--orders--{orderId}/DeleteOrderIntegration-Permission": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "OrdersApiDELETEordersorderIdDeleteOrderIntegrationPermission5929C388"
+          }
+        ],
+        "/OrdersApiStack/OrdersApi/DELETE--orders--{orderId}/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "OrdersApiDELETEordersorderIdBA3F6B1A"
+          }
+        ],
+        "/OrdersApiStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/OrdersApiStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/OrdersApiStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "OrdersApiStack"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  }
+}
