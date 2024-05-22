@@ -1,0 +1,13 @@
+- Baixar e instalar o AWS CLI
+msiexec.exe /i https://awscli.amazonaws.com/AWSCLIV2.msi
+
+
+- configuracao da autenticacao via sso
+aws configure sso
+
+- fazer o deploy na aws via CDK
+cdk deploy --profile mdl_AdministratorAccess-616048412683
+
+
+
+
